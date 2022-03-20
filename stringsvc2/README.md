@@ -90,6 +90,11 @@ To this project
 > go build
 ```
 
+To optimize module configuration
+```
+> go mod tidy
+```
+
 To start this server
 ```
 >.\stringsvc2.exe
