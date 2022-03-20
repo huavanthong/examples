@@ -41,10 +41,6 @@ var ErrEmpty = errors.New("empty string")
 
 // Step 4: Implement requests and response payload for out service
 // For each method, we define request and response structs
-type uppercaseRequest struct {
-	// Use marshalling to format struct to json.
-	S string `json:"s"`
-}
 
 type uppercaseResponse struct {
 	V   string `json:"v"`
@@ -63,8 +59,13 @@ type countResponse struct {
 // Endpoints are a primary abstraction in go-kit. An endpoint represents a single RPC (method in our service interface)
 func makeUppercaseEndpoint(svc StringService) endpoint.Endpoint {
 	return func(_ context.Context, request interface{}) (interface{}, error) {
+		// Step 5.1: Convert any request interface to our structure.
 		req := request.(uppercaseRequest)
+
+		// Step 5.2: Use our service to upper case data from request.
 		v, err := svc.Uppercase(req.S)
+
+		// Step 5.3: Response output
 		if err != nil {
 			return uppercaseResponse{v, err.Error()}, nil
 		}
