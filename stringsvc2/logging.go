@@ -6,11 +6,13 @@ import (
 	"github.com/go-kit/kit/log"
 )
 
+// TransportLoggingS3: Initialize a object from structure include log, and handler
 type loggingMiddleware struct {
 	logger log.Logger
 	next   StringService
 }
 
+// TransportLoggingS4: Create handler for Uppercase
 func (mw loggingMiddleware) Uppercase(s string) (output string, err error) {
 	defer func(begin time.Time) {
 		_ = mw.logger.Log(
@@ -22,6 +24,7 @@ func (mw loggingMiddleware) Uppercase(s string) (output string, err error) {
 		)
 	}(time.Now())
 
+	// TransportLoggingS5: Use handler inside struct at here
 	output, err = mw.next.Uppercase(s)
 	return
 }

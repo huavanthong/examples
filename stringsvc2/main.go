@@ -13,6 +13,8 @@ import (
 )
 
 func main() {
+
+	// TransportLoggingS1: Create logger at the head of main program
 	logger := log.NewLogfmtLogger(os.Stderr)
 
 	fieldKeys := []string{"method", "error"}
@@ -35,8 +37,11 @@ func main() {
 		Help:      "The result of each count method.",
 	}, []string{}) // no fields here
 
+	// TransportLoggingS2: create a object contain our service
 	var svc StringService
 	svc = stringService{}
+	// TransportLoggingS3: Initialize a object from structure include log, and handler
+	// Use chain handler to make logger
 	svc = loggingMiddleware{logger, svc}
 	svc = instrumentingMiddleware{requestCount, requestLatency, countResult, svc}
 
